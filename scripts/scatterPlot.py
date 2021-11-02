@@ -11,7 +11,7 @@ def scatterPlot_tab(data_frame_nasa):
     index_cmap = factor_cmap('class_type_simple', palette=['red', 'blue', 'green', 'yellow'],
                              factors=sorted(data_frame_nasa['class_type_simple'].unique()))
     # determine best fit line
-    p = figure(plot_width=600, plot_height=450, title="During Time for every month", toolbar_location=None,
+    p = figure(plot_width=1200, plot_height=900, title="During Time for every month", toolbar_location=None,
                tools="hover")
     p.scatter('duringTime', 'month', source=data_frame_nasa, fill_color=index_cmap, fill_alpha=0.6,  size=10,
               legend='class_type_simple')
