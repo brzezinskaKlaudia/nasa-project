@@ -2,17 +2,13 @@
 import pandas as pd
 import requests
 import numpy as np
-# os methods for manipulating paths
-from os.path import dirname, join
 
 # Bokeh basics 
 from bokeh.io import curdoc
 from bokeh.models.widgets import Tabs
 
 # Each tab is drawn by one script
-#from scripts.explanation import explanation_tab
-from scripts.histogramForDuringTime import histogram_for_during_time_tab
-from scripts.histogramForTimeHighPoint import histogram_for_time_high_point_tab
+from scripts.histogram import histogram_tab
 from scripts.table import table_tab
 from scripts.boxplot import boxplot_tab
 from scripts.scatterPlot import scatterPlot_tab
@@ -41,16 +37,14 @@ data_frame_nasa.insert(0, 'secondary_id', range(0, 0 + len(data_frame_nasa)))
 
 
 # Create each of the tabs
-#tab0 = explanation_tab()
+
 tab1 = table_tab(data_frame_nasa)
-tab2 = histogram_for_during_time_tab(data_frame_nasa)
-tab3 = histogram_for_time_high_point_tab(data_frame_nasa)
+tab2 = histogram_tab(data_frame_nasa, 'duringTime')
+tab3 = histogram_tab(data_frame_nasa, 'duringTimeHighPoint')
 tab4 = boxplot_tab(data_frame_nasa)
 tab5 = scatterPlot_tab(data_frame_nasa)
 
-#title = Div(text='<h1 style="text-align: center">Example Header</h1>')
 # Put all the tabs into one application
 tabs = Tabs(tabs=[tab1, tab2, tab3, tab4, tab5])
-#layout = column(title, tabs, sizing_mode='scale_width')
 # Put the tabs in the current document for display
 curdoc().add_root(tabs)

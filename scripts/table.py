@@ -16,14 +16,14 @@ def table_tab(data_frame_nasa):
     class_type_src = ColumnDataSource(class_type_stats)
 
     # Columns of table
-    table_columns = [TableColumn(field='class_type_simple', title='class_type_simple'),
+    table_columns = [TableColumn(field='class_type_simple', title='Class Type'),
                      TableColumn(field='min', title='Min Value'),
                      TableColumn(field='mean', title='Mean Value'),
                      TableColumn(field='median', title='Median Value'),
                      TableColumn(field='max', title='Max Value')]
 
     class_type_table = DataTable(source=class_type_src,
-                              columns=table_columns, width=1000)
+                                 columns=table_columns, width=1000)
 
     tab = Panel(child=class_type_table, title='Welcome')
 

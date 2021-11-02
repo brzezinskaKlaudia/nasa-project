@@ -15,10 +15,10 @@ def scatterPlot_tab(data_frame_nasa):
     p = figure(plot_width=1200, plot_height=900, title="During Time for every month", toolbar_location=None,
                tools="hover")
     p.scatter('duringTime', 'month', source=data_frame_nasa, fill_color=index_cmap, fill_alpha=0.6, size=10,
-              legend='class_type_simple')
+              legend_field='class_type_simple')
     p.xaxis.axis_label = 'Minutes'
     p.yaxis.axis_label = 'Month'
     p.legend.location = "top_left"
 
-    tab = Panel(child=p, title='scatterPlot')
+    tab = Panel(child=p, title='scatter Plot')
     return tab

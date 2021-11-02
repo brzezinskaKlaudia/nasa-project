@@ -13,7 +13,7 @@ from bokeh.palettes import Category20_16
 
 
 # Make plot with histogram and return tab
-def histogram_for_time_high_point_tab(data_frame_nasa):
+def histogram_tab(data_frame_nasa, value):
     # Function to make a dataset for histogram based on a list of carriers
     # a minimum delay, maximum delay, and histogram bin width
     def make_dataset(carrier_list, range_start=10, range_end=120, bin_width=5):
@@ -30,7 +30,7 @@ def histogram_for_time_high_point_tab(data_frame_nasa):
             subset = data_frame_nasa[data_frame_nasa['class_type_simple'] == carrier_name]
 
             # Create a histogram with 5 minute bins
-            arr_hist, edges = np.histogram(subset['duringTimeHighPoint'],
+            arr_hist, edges = np.histogram(subset[value],
                                            bins=int(range_extent / bin_width),
                                            range=[range_start, range_end])
 
@@ -78,17 +78,17 @@ def histogram_for_time_high_point_tab(data_frame_nasa):
     def make_plot(src):
         # Blank plot with correct labels
         p = figure(plot_width=700, plot_height=700,
-                   title='Histogram of during time to the high point by class',
+                   title='Histogram ' + str(value) + ' by class',
                    x_axis_label='During Time', y_axis_label='Proportion')
 
         # Quad glyphs to create a histogram
         p.quad(source=src, bottom=0, top='proportion', left='left', right='right',
-               color='color', fill_alpha=0.7, hover_fill_color='color', legend='class_type_simple',
+               color='color', fill_alpha=0.7, hover_fill_color='color', legend_field='class_type_simple',
                hover_fill_alpha=1.0, line_color='black')
 
         # Hover tool with vline mode
-        hover = HoverTool(tooltips=[('Carrier', '@class_type_simple'),
-                                    ('Delay', '@f_interval'),
+        hover = HoverTool(tooltips=[('Class Type', '@class_type_simple'),
+                                    ('During Time', '@f_interval'),
                                     ('Proportion', '@f_proportion')],
                           mode='vline')
 
@@ -125,7 +125,7 @@ def histogram_for_time_high_point_tab(data_frame_nasa):
     binwidth_select.on_change('value', update)
 
     range_select = RangeSlider(start=10, end=180, value=(10, 120),
-                               step=5, title='Range of Delays (min)')
+                               step=5, title='Range of Minutes')
     range_select.on_change('value', update)
 
     # Initial carriers and data source
@@ -144,6 +144,6 @@ def histogram_for_time_high_point_tab(data_frame_nasa):
     layout = row(controls, p)
 
     # Make a tab with the layout
-    tab = Panel(child=layout, title='Histogram 2')
+    tab = Panel(child=layout, title='Histogram ' + str(value))
 
     return tab
