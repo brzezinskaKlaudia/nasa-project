@@ -2,24 +2,23 @@ import numpy as np
 from bokeh.plotting import figure
 from bokeh.io import show
 from bokeh.models import ColumnDataSource, Panel
-
+from bokeh.transform import factor_cmap
 
 def scatterPlot_tab(data_frame_nasa):
     # the data
     x = data_frame_nasa['duringTime']
     y = data_frame_nasa['month']
-
+    index_cmap = factor_cmap('class_type_simple', palette=['red', 'blue', 'green', 'pink'],
+                             factors=sorted(data_frame_nasa['class_type_simple']))
     # determine best fit line
-    par = np.polyfit(x, y, 1, full=True)
-    slope = par[0][0]
-    intercept = par[0][1]
-    y_predicted = [slope * i + intercept for i in x]
-    # plot it
-    fig = figure(x_axis_label='minutes', y_axis_label='month', x_range=(0, 120), y_range=(0, 12))
-    fig.circle(x, y)
-    #fig.Title("test")
-    #x_range, x_scale, y_range or y_scale name,
-    fig.line(x, y_predicted, color='red', legend='y=' + str(round(slope, 2)) + 'x+' + str(round(intercept, 2)))
+    p = figure(plot_width=600, plot_height=450, title="During Time for every month", toolbar_location=None,
+               tools="hover")
+    p.scatter('duringTime', 'month', source=data_frame_nasa, fill_color=index_cmap, fill_alpha=0.6,  size=10,
+              legend='Class Type')
+    p.xaxis.axis_label = 'Minutes'
+    p.yaxis.axis_label = 'Month'
+    p.legend.location = "top_left"
 
-    tab = Panel(child=fig, title='scatterPlot')
+
+    tab = Panel(child=p, title='scatterPlot')
     return tab
