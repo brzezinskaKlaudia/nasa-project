@@ -19,7 +19,6 @@ def scatterPlot_tab(data_frame_nasa):
     fig = figure()
     fig.circle(x, y)
     fig.line(x, y_predicted, color='red', legend='y=' + str(round(slope, 2)) + 'x+' + str(round(intercept, 2)))
-    #show(fig)
 
     tab = Panel(child=fig, title='scatterPlot')
     return tab

@@ -6,10 +6,6 @@ from bokeh.models import ColumnDataSource, Panel
 
 def boxplot_tab(data_frame_nasa):
     cats = ["duringTime"]
-    #yy = [data_frame_nasa['duringTime'], data_frame_nasa['duringTimeHighPoint']]
-    #g = np.random.choice(cats, 2000)
-    #for i, l in enumerate(cats):
-     #   yy[g == l] += i // 2
     df = pd.DataFrame(dict(score=data_frame_nasa['duringTime'], group='duringTime'))
 
     # find the quartiles and IQR for each category
@@ -62,7 +58,6 @@ def boxplot_tab(data_frame_nasa):
     p.grid.grid_line_width = 2
     p.xaxis.major_label_text_font_size = "16px"
 
-    #show(p)
     tab = Panel(child=p, title='Boxplot')
 
     return tab

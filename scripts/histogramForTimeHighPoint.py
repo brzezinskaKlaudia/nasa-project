@@ -13,12 +13,12 @@ from bokeh.palettes import Category20_16
 
 
 # Make plot with histogram and return tab
-def histogram_tab(data_frame_nasa):
+def histogram_for_time_high_point_tab(data_frame_nasa):
     # Function to make a dataset for histogram based on a list of carriers
     # a minimum delay, maximum delay, and histogram bin width
     def make_dataset(carrier_list, range_start=10, range_end=120, bin_width=5):
         # Dataframe to hold information
-        by_carrier = pd.DataFrame(columns=['proportion', 'left', 'right',
+        by_class_type = pd.DataFrame(columns=['proportion', 'left', 'right',
                                            'f_proportion', 'f_interval',
                                            'class_type_simple', 'color'])
 
@@ -30,7 +30,7 @@ def histogram_tab(data_frame_nasa):
             subset = data_frame_nasa[data_frame_nasa['class_type_simple'] == carrier_name]
 
             # Create a histogram with 5 minute bins
-            arr_hist, edges = np.histogram(subset['duringTime'],
+            arr_hist, edges = np.histogram(subset['duringTimeHighPoint'],
                                            bins=int(range_extent / bin_width),
                                            range=[range_start, range_end])
 
@@ -51,11 +51,11 @@ def histogram_tab(data_frame_nasa):
             arr_df['color'] = Category20_16[i]
 
             # Add to the overall dataframe
-            by_carrier = by_carrier.append(arr_df)
+            by_class_type = by_class_type.append(arr_df)
         # Overall dataframe
-        by_carrier = by_carrier.sort_values(['class_type_simple', 'left'])
+        by_class_type = by_class_type.sort_values(['class_type_simple', 'left'])
 
-        return ColumnDataSource(by_carrier)
+        return ColumnDataSource(by_class_type)
 
     def style(p):
         # Title
@@ -78,7 +78,7 @@ def histogram_tab(data_frame_nasa):
     def make_plot(src):
         # Blank plot with correct labels
         p = figure(plot_width=700, plot_height=700,
-                   title='Histogram of during type by class',
+                   title='Histogram of during time to the high point by class',
                    x_axis_label='During Time', y_axis_label='Proportion')
 
         # Quad glyphs to create a histogram
@@ -93,16 +93,15 @@ def histogram_tab(data_frame_nasa):
                           mode='vline')
 
         p.add_tools(hover)
-
         # Styling
         p = style(p)
 
         return p
 
     def update(attr, old, new):
-        carriers_to_plot = [carrier_selection.labels[i] for i in carrier_selection.active]
+        class_type_to_plot = [class_type_selection.labels[i] for i in class_type_selection.active]
 
-        new_src = make_dataset(carriers_to_plot,
+        new_src = make_dataset(class_type_to_plot,
                                range_start=range_select.value[0],
                                range_end=range_select.value[1],
                                bin_width=binwidth_select.value)
@@ -110,15 +109,15 @@ def histogram_tab(data_frame_nasa):
         src.data.update(new_src.data)
 
     # Carriers and colors
-    available_carriers = list(set(data_frame_nasa['class_type_simple']))
-    available_carriers.sort()
+    available_class_type = list(set(data_frame_nasa['class_type_simple']))
+    available_class_type.sort()
 
     airline_colors = list(Category20_16)
     airline_colors.sort()
 
-    carrier_selection = CheckboxGroup(labels=available_carriers,
+    class_type_selection = CheckboxGroup(labels=available_class_type,
                                       active=[0, 1])
-    carrier_selection.on_change('active', update)
+    class_type_selection.on_change('active', update)
 
     binwidth_select = Slider(start=1, end=30,
                              step=1, value=5,
@@ -130,21 +129,21 @@ def histogram_tab(data_frame_nasa):
     range_select.on_change('value', update)
 
     # Initial carriers and data source
-    initial_carriers = [carrier_selection.labels[i] for i in carrier_selection.active]
+    initial_class_type = [class_type_selection.labels[i] for i in class_type_selection.active]
 
-    src = make_dataset(initial_carriers,
+    src = make_dataset(initial_class_type,
                        range_start=range_select.value[0],
                        range_end=range_select.value[1],
                        bin_width=binwidth_select.value)
     p = make_plot(src)
 
     # Put controls in a single element
-    controls = Column(carrier_selection, binwidth_select, range_select)
+    controls = Column(class_type_selection, binwidth_select, range_select)
 
     # Create a row layout
     layout = row(controls, p)
 
     # Make a tab with the layout
-    tab = Panel(child=layout, title='Histogram')
+    tab = Panel(child=layout, title='Histogram 2')
 
     return tab
