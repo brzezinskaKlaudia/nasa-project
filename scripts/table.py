@@ -17,10 +17,10 @@ def table_tab(data_frame_nasa):
 
     # Columns of table
     table_columns = [TableColumn(field='class_type_simple', title='class_type_simple'),
-                     TableColumn(field='min', title='Min Delay'),
-                     TableColumn(field='mean', title='Mean Delay'),
-                     TableColumn(field='median', title='Median Delay'),
-                     TableColumn(field='max', title='Max Delay')]
+                     TableColumn(field='min', title='Min Value'),
+                     TableColumn(field='mean', title='Mean Value'),
+                     TableColumn(field='median', title='Median Value'),
+                     TableColumn(field='max', title='Max Value')]
 
     class_type_table = DataTable(source=class_type_src,
                               columns=table_columns, width=1000)
