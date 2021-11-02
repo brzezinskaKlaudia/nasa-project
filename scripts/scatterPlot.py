@@ -14,10 +14,11 @@ def scatterPlot_tab(data_frame_nasa):
     slope = par[0][0]
     intercept = par[0][1]
     y_predicted = [slope * i + intercept for i in x]
-
     # plot it
-    fig = figure()
+    fig = figure(x_axis_label='minutes', y_axis_label='month', x_range=(0, 120), y_range=(0, 12))
     fig.circle(x, y)
+    #fig.Title("test")
+    #x_range, x_scale, y_range or y_scale name,
     fig.line(x, y_predicted, color='red', legend='y=' + str(round(slope, 2)) + 'x+' + str(round(intercept, 2)))
 
     tab = Panel(child=fig, title='scatterPlot')

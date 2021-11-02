@@ -43,8 +43,8 @@ data_frame_nasa.insert(0, 'secondary_id', range(0, 0 + len(data_frame_nasa)))
 # Create each of the tabs
 #tab0 = explanation_tab()
 tab1 = table_tab(data_frame_nasa)
-tab2 = histogram_for_time_high_point_tab(data_frame_nasa)
-tab3 = histogram_for_during_time_tab(data_frame_nasa)
+tab2 = histogram_for_during_time_tab(data_frame_nasa)
+tab3 = histogram_for_time_high_point_tab(data_frame_nasa)
 tab4 = boxplot_tab(data_frame_nasa)
 tab5 = scatterPlot_tab(data_frame_nasa)
 
