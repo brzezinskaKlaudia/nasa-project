@@ -14,9 +14,9 @@ from bokeh.palettes import Category20_16
 
 # Make plot with histogram and return tab
 def histogram_tab(data_frame_nasa, value):
-    # Function to make a dataset for histogram based on a list of carriers
+    # Function to make a dataset for histogram based on a list of class_types
     # a minimum delay, maximum delay, and histogram bin width
-    def make_dataset(carrier_list, range_start=10, range_end=120, bin_width=5):
+    def make_dataset(class_type_list, range_start=10, range_end=120, bin_width=5):
         # Dataframe to hold information
         by_class_type = pd.DataFrame(columns=['proportion', 'left', 'right',
                                            'f_proportion', 'f_interval',
@@ -24,10 +24,10 @@ def histogram_tab(data_frame_nasa, value):
 
         range_extent = range_end - range_start
 
-        # Iterate through all the carriers
-        for i, carrier_name in enumerate(carrier_list):
-            # Subset to the carrier
-            subset = data_frame_nasa[data_frame_nasa['class_type_simple'] == carrier_name]
+        # Iterate through all the class_types
+        for i, class_type_name in enumerate(class_type_list):
+            # Subset to the class_type
+            subset = data_frame_nasa[data_frame_nasa['class_type_simple'] == class_type_name]
 
             # Create a histogram with 5 minute bins
             arr_hist, edges = np.histogram(subset[value],
@@ -44,10 +44,10 @@ def histogram_tab(data_frame_nasa, value):
             arr_df['f_interval'] = ['%d to %d minutes' % (left, right) for left, right in
                                     zip(arr_df['left'], arr_df['right'])]
 
-            # Assign the carrier for labels
-            arr_df['class_type_simple'] = carrier_name
+            # Assign the class_type for labels
+            arr_df['class_type_simple'] = class_type_name
 
-            # Color each carrier differently
+            # Color each class_type differently
             arr_df['color'] = Category20_16[i]
 
             # Add to the overall dataframe
@@ -108,7 +108,7 @@ def histogram_tab(data_frame_nasa, value):
 
         src.data.update(new_src.data)
 
-    # Carriers and colors
+    # class_types and colors
     available_class_type = list(set(data_frame_nasa['class_type_simple']))
     available_class_type.sort()
 
@@ -128,7 +128,7 @@ def histogram_tab(data_frame_nasa, value):
                                step=5, title='Range of Minutes')
     range_select.on_change('value', update)
 
-    # Initial carriers and data source
+    # Initial class_types and data source
     initial_class_type = [class_type_selection.labels[i] for i in class_type_selection.active]
 
     src = make_dataset(initial_class_type,

@@ -1,10 +1,10 @@
 # nasa-project
-Wilkommen im Projekt!
+Wilkommen zum Projekt!
 
-Das ist eine kleine Bokeh Applikation, die Informationen über die Sonneneruptionen darstellt.
+Das ist eine kleine Bokeh Applikation, die Informationen über Sonneneruptionen darstellt.
 Ursprünglich war geplant, die Temperatur auf dem Mars zu visualisieren.
-Die Api war aber nicht funktionierend und über die NASA Api Webseite 
-sind wir auf die Sonneneruptionen gekommen.
+Die Api hat aber nicht funktioniert und über die NASA Api Webseite 
+sind wir auf Sonneneruptionen gekommen.
 
 Die erste Herausforderung war, die Daten zu verstehen und sich zu überlegen, 
 wie man sie pflegen kann und welche Informationen man bekommt.
@@ -33,7 +33,7 @@ Von BeginTime bis EndTime versteht man die gesamte Zeit über die, die Sonneneru
 
 Von BeginTime bis PeakTime versteht man die Zeit vom Beginn bis zur intensivsten Phase des Phenomenas. 
 
-"sourceLocation" und "activeRegionNum" zeigen auf die Lokations auf der Sonne.
+"sourceLocation" und "activeRegionNum" zeigen auf die Locations auf der Sonne.
 
 #####################################################################################
 Mit Pandas und Bokeh entstand eine kleine Web App, die versucht die Daten darzustellen. 
@@ -41,9 +41,10 @@ Während der Entwicklung wurden genauer Bibliotheken wie: Pandas, Numpy, Seaborn
 
 Zuletzt Pandas und Bokeh war unsere Wahl um die Daten darzustellen. 
 
-Die erste Tabelle ("Welcome") zeigt eine Zusammenfassung von den Daten auf Class Type sortiert.
-Die zwei nächste Histogramme stellen dar, wie die Dauerzeit für alle Klassen ausschaut.
-Vorletzte Tab fasst kurz Boxplot für During Time um.
-Der letzte Tab mit scatter plot beschreibt wie die Zeit für Monate ausschaut mit der Sortierung auf Klassen.
+Die erste Tabelle ("Welcome") zeigt eine Zusammenfassung von den Daten nach Class Type sortiert.
+Die nächsten zwei Histogramme stellen dar, wie die Dauer für alle Klassen ausschaut.
+Im vorletzen Tab sieht man ein Boxplot mit über die Dauer.
+Der letzte Tab zeigt mittels Scatter plot wie die Dauer in verschiednen Monaten war und ist nach Klassen sortiert
+(gefärbt).
 
 Vielen Dank für das Lesen :)
