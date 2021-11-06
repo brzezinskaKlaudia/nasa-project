@@ -48,3 +48,5 @@ Der letzte Tab zeigt mittels Scatter plot wie die Dauer in verschiednen Monaten 
 (gefärbt).
 
 Vielen Dank für das Lesen :)
+
+bokeh serve --show main.py
